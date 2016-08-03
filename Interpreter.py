@@ -1,3 +1,7 @@
+# https://www.cs.rit.edu/~wrc/documents/mano-rtl/
+# https://en.wikipedia.org/wiki/Instruction_set
+# https://en.wikipedia.org/wiki/Load–store_unit_(computing)
+
 from enum import Enum
 
 
@@ -6,6 +10,7 @@ class InstructionType(Enum):
     ADD = 2
     STORE = 3
     CLEAR = 4
+    LOAD = 5
 
 
 class Interpreter(object):
@@ -21,7 +26,8 @@ class Interpreter(object):
         1: InstructionType.HALT,
         2: InstructionType.ADD,
         3: InstructionType.STORE,
-        4: InstructionType.CLEAR
+        4: InstructionType.CLEAR,
+        5: InstructionType.LOAD
     }
 
     def interpret(self, memory, starting_address):
@@ -31,18 +37,21 @@ class Interpreter(object):
         while self.run_bit:
             self.instr = self.memory[self.PC]
 
-            print(self.instr)
+            # print(self.instr)
 
             self.instr_type = self.get_instr_type(self.instr)
 
-            if self.instr_type != InstructionType.HALT:
+            if self.instr_type != InstructionType.HALT \
+                    and self.instr_type != InstructionType.STORE \
+                    and self.instr_type != InstructionType.CLEAR:
                 self.data_loc = self.find_data(self.instr, self.instr_type)
-                self.PC += 1
+
                 if self.data_loc >= 0:
                     self.data = self.memory[self.data_loc]
                     self.PC += 1
 
             self.execute(self.instr_type, self.data)
+            self.PC += 1
 
     def get_instr_type(self, opcode):
         return self.instructions.get(opcode)
@@ -63,14 +72,26 @@ class Interpreter(object):
             self.memory.append(self.AC)
         elif type == InstructionType.CLEAR:
             self.AC = 0
+        elif type == InstructionType.LOAD:
+            self.AC = data
+
+    def status(self):
+        print("PC:", self.PC)
+        print("AC:", self.AC)
+        self.print_memory()
+
+    def print_memory(self):
+        for i in self.memory:
+            print(i, "| ", end='')
+
 
 interpreter = Interpreter()
 
-memory = [2, 28, 2, 2, 1]
+memory = [5, 19, 2, 28, 2, 2, 3, 4, 1]
 
 interpreter.interpret(memory, 0)
 
-print(interpreter.AC)
+interpreter.status()
 
 # interpreter.memory = memory;
 
