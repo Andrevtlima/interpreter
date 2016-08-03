@@ -16,8 +16,8 @@ class Interpreter(object):
     run_bit = True
     memory = []
     instructions = {
-        1: InstructionType.ADD,
-        2: InstructionType.HALT
+        1: InstructionType.HALT,
+        2: InstructionType.ADD
     }
 
     def interpret(self, memory, starting_address):
@@ -59,7 +59,7 @@ class Interpreter(object):
 
 interpreter = Interpreter()
 
-memory = [1, 29, 1, 1, 2]
+memory = [2, 28, 2, 2, 1]
 
 interpreter.interpret(memory, 0)
 
