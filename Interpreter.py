@@ -1,6 +1,7 @@
 # https://www.cs.rit.edu/~wrc/documents/mano-rtl/
 # https://en.wikipedia.org/wiki/Instruction_set
 # https://en.wikipedia.org/wiki/Load–store_unit_(computing)
+# https://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Mips/load.html
 
 from enum import Enum
 
