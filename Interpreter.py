@@ -4,6 +4,8 @@ from enum import Enum
 class InstructionType(Enum):
     HALT = 1
     ADD = 2
+    STORE = 3
+    CLEAR = 4
 
 
 class Interpreter(object):
@@ -17,7 +19,9 @@ class Interpreter(object):
     memory = []
     instructions = {
         1: InstructionType.HALT,
-        2: InstructionType.ADD
+        2: InstructionType.ADD,
+        3: InstructionType.STORE,
+        4: InstructionType.CLEAR
     }
 
     def interpret(self, memory, starting_address):
@@ -55,7 +59,10 @@ class Interpreter(object):
             self.run_bit = False
         elif type == InstructionType.ADD:
             self.AC += data
-
+        elif type == InstructionType.STORE:
+            self.memory.append(self.AC)
+        elif type == InstructionType.CLEAR:
+            self.AC = 0
 
 interpreter = Interpreter()
 
