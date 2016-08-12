@@ -2,6 +2,7 @@
 # https://en.wikipedia.org/wiki/Instruction_set
 # https://en.wikipedia.org/wiki/Load–store_unit_(computing)
 # https://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Mips/load.html
+# https://en.wikibooks.org/wiki/A-level_Computing/AQA/Computer_Components,_The_Stored_Program_Concept_and_the_Internet/Machine_Level_Architecture/Machine_code_and_processor_instruction_set
 
 from enum import Enum
 
