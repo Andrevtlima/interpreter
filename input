@@ -1,0 +1,4 @@
+ADD 1
+CLEAR
+LOAD 5
+HALT

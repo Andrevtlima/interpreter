@@ -45,6 +45,7 @@ class Interpreter(object):
             if self.instr_type != InstructionType.HALT \
                     and self.instr_type != InstructionType.STORE \
                     and self.instr_type != InstructionType.CLEAR:
+
                 self.data_loc = self.find_data(self.instr, self.instr_type)
 
                 if self.data_loc >= 0:
@@ -87,12 +88,33 @@ class Interpreter(object):
 
 
 interpreter = Interpreter()
+memory = []
 
-memory = [5, 19, 2, 28, 2, 2, 3, 4, 1]
+file_input = open("input", "r")
+
+for line in file_input.readlines():
+    buffer = line.rstrip().split(" ")
+
+    instr = buffer[0]
+    instr_opcode = InstructionType[instr].value
+    memory.append(instr_opcode)
+
+    if len(buffer) > 1:
+        operand = int(buffer[1])
+
+        if operand is not None:
+            memory.append(operand)
+
+    print(memory)
 
 interpreter.interpret(memory, 0)
-
 interpreter.status()
+
+# memory = [5, 19, 2, 28, 2, 2, 3, 4, 1]
+
+# interpreter.interpret(memory, 0)
+
+# interpreter.status()
 
 # interpreter.memory = memory;
 
