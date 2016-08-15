@@ -13,6 +13,9 @@ class InstructionType(Enum):
     STORE = 3
     CLEAR = 4
     LOAD = 5
+    AND = 6
+    INC = 7
+    MUL = 8
 
 
 class Interpreter(object):
@@ -29,7 +32,10 @@ class Interpreter(object):
         2: InstructionType.ADD,
         3: InstructionType.STORE,
         4: InstructionType.CLEAR,
-        5: InstructionType.LOAD
+        5: InstructionType.LOAD,
+        6: InstructionType.AND,
+        7: InstructionType.INC,
+        8: InstructionType.MUL
     }
 
     def interpret(self, memory, starting_address):
@@ -45,6 +51,7 @@ class Interpreter(object):
 
             if self.instr_type != InstructionType.HALT \
                     and self.instr_type != InstructionType.STORE \
+                    and self.instr_type != InstructionType.INC \
                     and self.instr_type != InstructionType.CLEAR:
 
                 self.data_loc = self.find_data(self.instr, self.instr_type)
@@ -77,7 +84,17 @@ class Interpreter(object):
             self.AC = 0
         elif type == InstructionType.LOAD:
             self.AC = data
-
+        elif type == InstructionType.AND:
+        	temp = 0
+        	if self.AC == data:
+        		temp = 1
+        	
+        	self.AC = temp
+        elif type == InstructionType.INC:
+        	self.AC += 1
+        elif type == InstructionType.MUL:
+        	self.AC *= data
+        	
     def status(self):
         print("PC:", self.PC)
         print("AC:", self.AC)
