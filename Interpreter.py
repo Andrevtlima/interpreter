@@ -5,17 +5,17 @@
 # https://en.wikibooks.org/wiki/A-level_Computing/AQA/Computer_Components,_The_Stored_Program_Concept_and_the_Internet/Machine_Level_Architecture/Machine_code_and_processor_instruction_set
 
 from enum import Enum
-
+import sys
 
 class InstructionType(Enum):
     HALT = 1
-    ADD = 2
-    STORE = 3
+    ADD = 2 #42 ;adds the number 42 to the contents of the accumulator 
+    STORE = 3 #34  ;save the accumulator result to the memory address 34
     CLEAR = 4
-    LOAD = 5
-    AND = 6
-    INC = 7
-    MUL = 8
+    LOAD = 5 #23 ;loads the number 23 into the accumulator
+    AND = 6 #boolean algebra function
+    INC = 7 #increment a number by 1
+    MUL = 8 #multiply numbers together
 
 
 class Interpreter(object):
@@ -45,7 +45,7 @@ class Interpreter(object):
         while self.run_bit:
             self.instr = self.memory[self.PC]
 
-            # print(self.instr)
+            #print("self",self.instr)
 
             self.instr_type = self.get_instr_type(self.instr)
 
@@ -67,12 +67,10 @@ class Interpreter(object):
         return self.instructions.get(opcode)
 
     def find_data(self, instr, type):
-        for i in range(self.PC, len(memory)):
-            if self.get_instr_type(instr) == type:
-                return i + 1
+                  
+                return self.PC + 1
 
-        return -1
-
+        
     def execute(self, type, data):
         if type == InstructionType.HALT:
             self.run_bit = False
@@ -107,8 +105,9 @@ class Interpreter(object):
 
 interpreter = Interpreter()
 memory = []
-
-file_input = open("input", "r")
+file_path = sys.argv[1]
+#print (file_path)
+file_input = open(file_path, "r")
 
 for line in file_input.readlines():
     buffer = line.rstrip().split(" ")
